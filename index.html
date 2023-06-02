@@ -72,9 +72,6 @@
         },
       };
 
-      init();
-      animate();
-
       function updateOrthoCamera() {
         const size = controls.target.distanceTo(camera.position);
         const aspect = camera.aspect;
@@ -89,10 +86,73 @@
         orthoCamera.updateProjectionMatrix();
       }
 
+      // #region 楼盘参数初始化
+      const lpmc = {
+        text: '',
+      };
+      const ksmj = {
+        text: '',
+      };
+      const zhz = {
+        text: '',
+      };
+      const gcjd = {
+        text: '',
+      };
+      const qhl = {
+        text: '',
+      };
+      const dsrq = {
+        text: '',
+      };
+      const qzrq = {
+        text: '',
+      };
+      const kprq = {
+        text: '',
+      };
+      const jgrq = {
+        text: '',
+      };
+
+      let gui = new GUI();
+      let guicolor = 'red';
+      // #endregion
+
+      /**
+       * 菜单
+       * */
+      function guiinit() {
+        // 获取默认文件夹对象
+        gui.$title.innerText = '楼盘信息';
+        // 创建多个文本项
+        const textItems = [];
+        textItems.push(gui.add(lpmc, 'text').name('楼盘名称'));
+        textItems.push(gui.add(ksmj, 'text').name('可售面积'));
+        textItems.push(gui.add(zhz, 'text').name('总货值'));
+        textItems.push(gui.add(gcjd, 'text').name('工程进度'));
+        textItems.push(gui.add(qhl, 'text').name('去化率'));
+        textItems.push(gui.add(dsrq, 'text').name('达售日期'));
+        textItems.push(gui.add(qzrq, 'text').name('取证日期'));
+        textItems.push(gui.add(kprq, 'text').name('开盘日期'));
+        textItems.push(gui.add(jgrq, 'text').name('竣工日期'));
+        // 批量设置文本项的样式
+        textItems.forEach((item) => {
+          item.domElement.style.color = guicolor; // 设置为红色
+        });
+        gui.close();
+
+        // // 获取文本字段的DOM元素
+        // const textElement = textControl.domElement.getElementsByTagName('input')[0];
+
+        // // 设置文本字段为只读
+        // textElement.readOnly = true;
+      }
+
       function init() {
         scene = new THREE.Scene();
         // scene.background = new THREE.Color('#454e61');
-        scene.background = new THREE.Color('#0xffffff');
+        scene.background = new THREE.Color('rgb(192, 192, 192)');
         camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 5000);
         orthoCamera = new THREE.OrthographicCamera();
 
@@ -167,55 +227,70 @@
         });
         // #endregion
 
-        const material1 = new THREE.MeshPhongMaterial({ color: '#08d9d6' });
-        csm.setupMaterial(material1);
-
-        const material2 = new THREE.MeshPhongMaterial({ color: '#ff2e63' });
-        csm.setupMaterial(material2);
-
-        const geometry = new THREE.BoxGeometry(100, 50, 50);
-
-        // #region 建筑物设置
+        const material11 = new THREE.MeshPhongMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.5,
+        });
+        csm.setupMaterial(material11);
 
         // #region 组合 楼栋1
+
+        const material12 = new THREE.MeshPhongMaterial({
+          color: '#ff2e63',
+          transparent: true,
+          opacity: 0.7,
+        });
+        csm.setupMaterial(material12);
         // 创建上半部分立方体
-        const topCube = new THREE.Mesh(geometry, material1);
+        const geometry1 = new THREE.BoxGeometry(100, 70, 50);
+        const topCube = new THREE.Mesh(geometry1, material11);
         topCube.castShadow = true;
         topCube.receiveShadow = true;
         topCube.userData.id = 1; // 设置自定义属性id
         scene.add(topCube);
 
         // 创建下半部分立方体
-        const bottomCube = new THREE.Mesh(geometry, material2);
+        const geometry2 = new THREE.BoxGeometry(100, 30, 50);
+        const bottomCube = new THREE.Mesh(geometry2, material12);
         bottomCube.castShadow = true;
         bottomCube.receiveShadow = true;
         bottomCube.userData.id = 1;
         scene.add(bottomCube);
 
         // 设置上半部分立方体的位置和缩放
-        topCube.position.set(-200, 150, 100);
+        topCube.position.set(-200, 130, 100);
         topCube.scale.set(1, 2, 1);
         // topCube.scale.y = Math.random() * 2 + 6;
 
         // 设置下半部分立方体的位置和缩放
-        bottomCube.position.set(-200, 50, 100);
+        bottomCube.position.set(-200, 30, 100);
         bottomCube.scale.set(1, 2, 1);
         // bottomCube.scale.y = Math.random() * 2 + 6;
         // #endregion
 
         // #region 组合 楼栋2
+
+        const material22 = new THREE.MeshPhongMaterial({
+          color: 0xffff54,
+          transparent: true,
+          opacity: 0.7,
+        });
+        csm.setupMaterial(material22);
+        const geometry21 = new THREE.BoxGeometry(100, 50, 50);
+        const geometry22 = new THREE.BoxGeometry(100, 50, 50);
         // 创建上半部分立方体
-        const topCube2 = new THREE.Mesh(geometry, material1);
+        const topCube2 = new THREE.Mesh(geometry21, material11);
         topCube2.castShadow = true;
         topCube2.receiveShadow = true;
-        topCube2.userData.id = 1; // 设置自定义属性id
+        topCube2.userData.id = 2; // 设置自定义属性id
         scene.add(topCube2);
 
         // 创建下半部分立方体
-        const bottomCube2 = new THREE.Mesh(geometry, material2);
+        const bottomCube2 = new THREE.Mesh(geometry22, material22);
         bottomCube2.castShadow = true;
         bottomCube2.receiveShadow = true;
-        bottomCube2.userData.id = 1;
+        bottomCube2.userData.id = 2;
         scene.add(bottomCube2);
 
         // 设置上半部分立方体的位置和缩放
@@ -230,86 +305,74 @@
         // #endregion
 
         // #region 组合 楼栋3
+        const material32 = new THREE.MeshPhongMaterial({
+          color: 0x00ff00,
+          transparent: true,
+          opacity: 0.7,
+        });
+        csm.setupMaterial(material32);
+        const geometry31 = new THREE.BoxGeometry(100, 30, 50);
+        const geometry32 = new THREE.BoxGeometry(100, 70, 50);
         // 创建上半部分立方体
-        const topCube3 = new THREE.Mesh(geometry, material1);
+        const topCube3 = new THREE.Mesh(geometry31, material11);
         topCube3.castShadow = true;
         topCube3.receiveShadow = true;
-        topCube3.userData.id = 1; // 设置自定义属性id
+        topCube3.userData.id = 3; // 设置自定义属性id
         scene.add(topCube3);
 
         // 创建下半部分立方体
-        const bottomCube3 = new THREE.Mesh(geometry, material2);
+        const bottomCube3 = new THREE.Mesh(geometry32, material32);
         bottomCube3.castShadow = true;
         bottomCube3.receiveShadow = true;
-        bottomCube3.userData.id = 1;
+        bottomCube3.userData.id = 3;
         scene.add(bottomCube3);
 
         // 设置上半部分立方体的位置和缩放
-        topCube3.position.set(-360, 150, -65);
+        topCube3.position.set(-360, 170, -65);
         topCube3.scale.set(1, 2, 1);
         // topCube.scale.y = Math.random() * 2 + 6;
 
         // 设置下半部分立方体的位置和缩放
-        bottomCube3.position.set(-360, 50, -65);
+        bottomCube3.position.set(-360, 70, -65);
         bottomCube3.scale.set(1, 2, 1);
         // bottomCube.scale.y = Math.random() * 2 + 6;
         // #endregion
 
         // #region 组合 楼栋4
         // 创建上半部分立方体
-        const topCube4 = new THREE.Mesh(geometry, material1);
+        const material42 = new THREE.MeshPhongMaterial({
+          color: 0x888888,
+          transparent: true,
+          opacity: 0.7,
+        });
+        csm.setupMaterial(material32);
+        const geometry41 = new THREE.BoxGeometry(100, 20, 50);
+        const geometry42 = new THREE.BoxGeometry(100, 100, 50);
+        const topCube4 = new THREE.Mesh(geometry41, material11);
         topCube4.castShadow = true;
         topCube4.receiveShadow = true;
-        topCube4.userData.id = 1; // 设置自定义属性id
+        topCube4.userData.id = 4; // 设置自定义属性id
         scene.add(topCube4);
 
         // 创建下半部分立方体
-        const bottomCube4 = new THREE.Mesh(geometry, material2);
+        const bottomCube4 = new THREE.Mesh(geometry42, material42);
         bottomCube4.castShadow = true;
         bottomCube4.receiveShadow = true;
-        bottomCube4.userData.id = 1;
+        bottomCube4.userData.id = 4;
         scene.add(bottomCube4);
 
         // 设置上半部分立方体的位置和缩放
-        topCube4.position.set(-200, 150, -65);
+        topCube4.position.set(-200, 220, -65);
         topCube4.scale.set(1, 2, 1);
         // topCube.scale.y = Math.random() * 2 + 6;
 
         // 设置下半部分立方体的位置和缩放
-        bottomCube4.position.set(-200, 50, -65);
+        bottomCube4.position.set(-200, 100, -65);
         bottomCube4.scale.set(1, 2, 1);
         // bottomCube.scale.y = Math.random() * 2 + 6;
         // #endregion
 
         // #endregion
-
-        // for (let i = 0; i < 20; i++) {
-        //   // #region 组合
-        //   // 创建上半部分立方体
-        //   const topCube = new THREE.Mesh(geometry, material1);
-        //   topCube.castShadow = true;
-        //   topCube.receiveShadow = true;
-        //   topCube.userData.id = i + 1; // 设置自定义属性id
-        //   scene.add(topCube);
-
-        //   // 创建下半部分立方体
-        //   const bottomCube = new THREE.Mesh(geometry, material2);
-        //   bottomCube.castShadow = true;
-        //   bottomCube.receiveShadow = true;
-        //   bottomCube.userData.id = i + 1;
-        //   scene.add(bottomCube);
-
-        //   // 设置上半部分立方体的位置和缩放
-        //   topCube.position.set(-i * 25, 30, 30);
-        //   topCube.scale.set(1, 2, 1);
-        //   // topCube.scale.y = Math.random() * 2 + 6;
-
-        //   // 设置下半部分立方体的位置和缩放
-        //   bottomCube.position.set(-i * 25, 10, 30);
-        //   bottomCube.scale.set(1, 2, 1);
-        //   // bottomCube.scale.y = Math.random() * 2 + 6;
-        //   // #endregion
-        // }
 
         window.addEventListener('resize', function () {
           camera.aspect = window.innerWidth / window.innerHeight;
@@ -354,9 +417,61 @@
 
           if (clickedObject instanceof THREE.Mesh) {
             const id = clickedObject.userData.id;
-            id && window.alert('我是楼座' + id);
+            id && setGui(id);
           }
         }
+      }
+
+      function setGui(id) {
+        if (id === 1) {
+          lpmc.text = '2期-1批次-1A栋 住宅-超高层';
+          ksmj.text = '1280.00\u33A1';
+          zhz.text = '38400.00万元';
+          gcjd.text = '18/36 50%';
+          qhl.text = '22.22%';
+          dsrq.text = '2023-07-10';
+          qzrq.text = '2023-07-14';
+          kprq.text = '2023-08-10';
+          jgrq.text = '2023-08-20';
+          guicolor = 'red';
+        } else if (id === 2) {
+          lpmc.text = '2期-2批次-2A栋 住宅-超高层';
+          ksmj.text = '1280.00\u33A1';
+          zhz.text = '39400.00万元';
+          gcjd.text = '21/36 60%';
+          qhl.text = '56.22%';
+          dsrq.text = '2023-07-10';
+          qzrq.text = '2023-07-14';
+          kprq.text = '2023-08-10';
+          jgrq.text = '2023-08-20';
+          guicolor = 'yellow';
+        } else if (id === 3) {
+          lpmc.text = '1期-2批次-3A栋 住宅-超高层';
+          ksmj.text = '1280.00\u33A1';
+          zhz.text = '39400.00万元';
+          gcjd.text = '21/36 60%';
+          qhl.text = '80.32%';
+          dsrq.text = '2023-05-10';
+          qzrq.text = '2023-05-14';
+          kprq.text = '2023-06-10';
+          jgrq.text = '2023-06-20';
+          guicolor = 'green';
+        } else if (id === 4) {
+          lpmc.text = '3期-1批次-4A栋 住宅-超高层';
+          ksmj.text = '1280.00\u33A1';
+          zhz.text = '39400.00万元';
+          gcjd.text = '40/42 90%';
+          qhl.text = '未开售';
+          dsrq.text = '2023-09-10';
+          qzrq.text = '2023-09-14';
+          kprq.text = '2023-09-10';
+          jgrq.text = '2023-09-20';
+          guicolor = 'gray';
+        }
+        // gui.destroy(); // 销毁旧的 GUI 对象
+        gui = new GUI(); // 将新的 GUI 对象赋值给原来的 gui 变量
+        guiinit();
+        gui.open();
       }
 
       function animate() {
@@ -383,6 +498,10 @@
           renderer.render(scene, camera);
         }
       }
+
+      init();
+      animate();
+      guiinit();
     </script>
   </body>
 </html>
