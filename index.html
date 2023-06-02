@@ -91,7 +91,8 @@
 
       function init() {
         scene = new THREE.Scene();
-        scene.background = new THREE.Color('#454e61');
+        // scene.background = new THREE.Color('#454e61');
+        scene.background = new THREE.Color('#0xffffff');
         camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 5000);
         orthoCamera = new THREE.OrthographicCamera();
 
@@ -103,7 +104,7 @@
 
         controls = new OrbitControls(camera, renderer.domElement);
         controls.maxPolarAngle = Math.PI / 2;
-        camera.position.set(160, 60, -250);
+        camera.position.set(160, 260, -250);
         controls.target = new THREE.Vector3(-200, 10, 0);
         controls.update();
 
@@ -135,6 +136,7 @@
         csmHelper.visible = false;
         scene.add(csmHelper);
 
+        // #region 背景设置
         const textureLoader = new THREE.TextureLoader();
         const floorTexture = textureLoader.load('bg1.png', function (texture) {
           // 获取背景纹理图像的原始尺寸
@@ -158,10 +160,12 @@
           const planeMaterial = new THREE.MeshBasicMaterial({ map: texture });
 
           const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+          plane.position.set(-250, 0, 0); // 将平面向下平移以居中显示
           plane.rotation.x = -Math.PI / 2;
 
           scene.add(plane);
         });
+        // #endregion
 
         const material1 = new THREE.MeshPhongMaterial({ color: '#08d9d6' });
         csm.setupMaterial(material1);
@@ -169,35 +173,143 @@
         const material2 = new THREE.MeshPhongMaterial({ color: '#ff2e63' });
         csm.setupMaterial(material2);
 
-        const geometry = new THREE.BoxGeometry(10, 10, 10);
+        const geometry = new THREE.BoxGeometry(100, 50, 50);
 
-        for (let i = 0; i < 20; i++) {
-          // #region 组合
-          // 创建上半部分立方体
-          const topCube = new THREE.Mesh(geometry, material1);
-          topCube.castShadow = true;
-          topCube.receiveShadow = true;
-          topCube.userData.id = i + 1; // 设置自定义属性id
-          scene.add(topCube);
+        // #region 建筑物设置
 
-          // 创建下半部分立方体
-          const bottomCube = new THREE.Mesh(geometry, material2);
-          bottomCube.castShadow = true;
-          bottomCube.receiveShadow = true;
-          bottomCube.userData.id = i + 1;
-          scene.add(bottomCube);
+        // #region 组合 楼栋1
+        // 创建上半部分立方体
+        const topCube = new THREE.Mesh(geometry, material1);
+        topCube.castShadow = true;
+        topCube.receiveShadow = true;
+        topCube.userData.id = 1; // 设置自定义属性id
+        scene.add(topCube);
 
-          // 设置上半部分立方体的位置和缩放
-          topCube.position.set(-i * 25, 30, 30);
-          topCube.scale.set(1, 2, 1);
-          // topCube.scale.y = Math.random() * 2 + 6;
+        // 创建下半部分立方体
+        const bottomCube = new THREE.Mesh(geometry, material2);
+        bottomCube.castShadow = true;
+        bottomCube.receiveShadow = true;
+        bottomCube.userData.id = 1;
+        scene.add(bottomCube);
 
-          // 设置下半部分立方体的位置和缩放
-          bottomCube.position.set(-i * 25, 10, 30);
-          bottomCube.scale.set(1, 2, 1);
-          // bottomCube.scale.y = Math.random() * 2 + 6;
-          // #endregion
-        }
+        // 设置上半部分立方体的位置和缩放
+        topCube.position.set(-200, 150, 100);
+        topCube.scale.set(1, 2, 1);
+        // topCube.scale.y = Math.random() * 2 + 6;
+
+        // 设置下半部分立方体的位置和缩放
+        bottomCube.position.set(-200, 50, 100);
+        bottomCube.scale.set(1, 2, 1);
+        // bottomCube.scale.y = Math.random() * 2 + 6;
+        // #endregion
+
+        // #region 组合 楼栋2
+        // 创建上半部分立方体
+        const topCube2 = new THREE.Mesh(geometry, material1);
+        topCube2.castShadow = true;
+        topCube2.receiveShadow = true;
+        topCube2.userData.id = 1; // 设置自定义属性id
+        scene.add(topCube2);
+
+        // 创建下半部分立方体
+        const bottomCube2 = new THREE.Mesh(geometry, material2);
+        bottomCube2.castShadow = true;
+        bottomCube2.receiveShadow = true;
+        bottomCube2.userData.id = 1;
+        scene.add(bottomCube2);
+
+        // 设置上半部分立方体的位置和缩放
+        topCube2.position.set(-360, 150, 100);
+        topCube2.scale.set(1, 2, 1);
+        // topCube.scale.y = Math.random() * 2 + 6;
+
+        // 设置下半部分立方体的位置和缩放
+        bottomCube2.position.set(-360, 50, 100);
+        bottomCube2.scale.set(1, 2, 1);
+        // bottomCube.scale.y = Math.random() * 2 + 6;
+        // #endregion
+
+        // #region 组合 楼栋3
+        // 创建上半部分立方体
+        const topCube3 = new THREE.Mesh(geometry, material1);
+        topCube3.castShadow = true;
+        topCube3.receiveShadow = true;
+        topCube3.userData.id = 1; // 设置自定义属性id
+        scene.add(topCube3);
+
+        // 创建下半部分立方体
+        const bottomCube3 = new THREE.Mesh(geometry, material2);
+        bottomCube3.castShadow = true;
+        bottomCube3.receiveShadow = true;
+        bottomCube3.userData.id = 1;
+        scene.add(bottomCube3);
+
+        // 设置上半部分立方体的位置和缩放
+        topCube3.position.set(-360, 150, -65);
+        topCube3.scale.set(1, 2, 1);
+        // topCube.scale.y = Math.random() * 2 + 6;
+
+        // 设置下半部分立方体的位置和缩放
+        bottomCube3.position.set(-360, 50, -65);
+        bottomCube3.scale.set(1, 2, 1);
+        // bottomCube.scale.y = Math.random() * 2 + 6;
+        // #endregion
+
+        // #region 组合 楼栋4
+        // 创建上半部分立方体
+        const topCube4 = new THREE.Mesh(geometry, material1);
+        topCube4.castShadow = true;
+        topCube4.receiveShadow = true;
+        topCube4.userData.id = 1; // 设置自定义属性id
+        scene.add(topCube4);
+
+        // 创建下半部分立方体
+        const bottomCube4 = new THREE.Mesh(geometry, material2);
+        bottomCube4.castShadow = true;
+        bottomCube4.receiveShadow = true;
+        bottomCube4.userData.id = 1;
+        scene.add(bottomCube4);
+
+        // 设置上半部分立方体的位置和缩放
+        topCube4.position.set(-200, 150, -65);
+        topCube4.scale.set(1, 2, 1);
+        // topCube.scale.y = Math.random() * 2 + 6;
+
+        // 设置下半部分立方体的位置和缩放
+        bottomCube4.position.set(-200, 50, -65);
+        bottomCube4.scale.set(1, 2, 1);
+        // bottomCube.scale.y = Math.random() * 2 + 6;
+        // #endregion
+
+        // #endregion
+
+        // for (let i = 0; i < 20; i++) {
+        //   // #region 组合
+        //   // 创建上半部分立方体
+        //   const topCube = new THREE.Mesh(geometry, material1);
+        //   topCube.castShadow = true;
+        //   topCube.receiveShadow = true;
+        //   topCube.userData.id = i + 1; // 设置自定义属性id
+        //   scene.add(topCube);
+
+        //   // 创建下半部分立方体
+        //   const bottomCube = new THREE.Mesh(geometry, material2);
+        //   bottomCube.castShadow = true;
+        //   bottomCube.receiveShadow = true;
+        //   bottomCube.userData.id = i + 1;
+        //   scene.add(bottomCube);
+
+        //   // 设置上半部分立方体的位置和缩放
+        //   topCube.position.set(-i * 25, 30, 30);
+        //   topCube.scale.set(1, 2, 1);
+        //   // topCube.scale.y = Math.random() * 2 + 6;
+
+        //   // 设置下半部分立方体的位置和缩放
+        //   bottomCube.position.set(-i * 25, 10, 30);
+        //   bottomCube.scale.set(1, 2, 1);
+        //   // bottomCube.scale.y = Math.random() * 2 + 6;
+        //   // #endregion
+        // }
 
         window.addEventListener('resize', function () {
           camera.aspect = window.innerWidth / window.innerHeight;
